@@ -31,7 +31,7 @@ public class ConditionalExamples {
 	 * just multiply several times
 	 */
 	public static int computedCubed(double numberToCube) {
-		return 0;
+		return (int) (numberToCube*numberToCube*numberToCube);
 	}
 
 	/**
@@ -69,7 +69,14 @@ public class ConditionalExamples {
 	 * see how that compares to the real value.
 	 */
 	public static void guessCubeRoot(double number, double guess) {
-		
+		double calculatedGuess=computedCubed(guess);
+		if(number<guess) {
+			System.out.println("Lower");
+		}else if(number>guess) {
+			System.out.println("Higher");
+		}else {
+			System.out.println("Perfect");
+		}
 	}
 	
 	/**
@@ -82,7 +89,7 @@ public class ConditionalExamples {
 	 * second.
 	 */
 	public static boolean isWayBigger (int bigger, int smaller) {
-		return false;
+		return (bigger/smaller>=100);
 	}
 	
 	/**
@@ -96,7 +103,7 @@ public class ConditionalExamples {
 	 * Solve this one yourself
 	 */
 	public static boolean isGreaterThan3 (int one, int two, int three) {
-		return false;
+		return (one>3) || (two>3) || (three>3);
 	}
 	
 	public static void main(String[] args) {

@@ -1,3 +1,4 @@
+import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 
 public class LoopProbs {
 	
@@ -38,7 +39,11 @@ public class LoopProbs {
 	 */
 	public static long fact(int num) {
 		// TODO: Please provide an implementation for this one
-		return 0;
+		int out = 1;
+		for(int i = num; i >=1;i--) {
+			out*=i;
+		}
+		return out;
 	}
 	
 	/**
