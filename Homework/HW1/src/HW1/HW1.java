@@ -44,9 +44,10 @@ public class HW1 {
 		for(int i=0; i<input.length();i++) {
 			char c = input.charAt(i);
 			if(c=='t') {
+				//score=score+7;
 				score+=7;
 			}
-			if(c=='f') {
+			else if(c=='f') {
 				score+=3;
 			}
 		}
