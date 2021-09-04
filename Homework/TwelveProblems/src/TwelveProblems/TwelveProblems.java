@@ -61,7 +61,7 @@ public class TwelveProblems {
 		}
 		return string.charAt(string.length() - 2) == '5';
 	}
-
+	
 	/**
 	 * Determine if a given string ends with an uppercase letter.
 	 * 
@@ -314,12 +314,14 @@ public class TwelveProblems {
 	 */
 	
 	public static ArrayList<String> doubleDouble(ArrayList<String> input) {
+		ArrayList<String> output = new ArrayList<String>();
 		for (int i = 0; i < input.size(); i++) {
+			output.add(input.get(i));
 			if (input.get(i).equals("double")) {
-				input.add(i, "double");
+				output.add(input.get(i));
 			}
 		}
-		return input;
+		return output;
 	}
 
 	/**
@@ -335,10 +337,16 @@ public class TwelveProblems {
 	public static ArrayList<String> threeCharacterStrings(String input) {
 		int i = 0;
 		ArrayList<String> output = new ArrayList<String>();
+		if(input.length()==3) {
+			output.add(input);
+			return output;
+		}else if(input.length()<3) {
+			return output;
+		}
 		do {
 			output.add(input.substring(i, i + 3));
 			i++;
-		} while (i + 3 == input.length());
+		} while (i + 3 <= input.length());
 		return output;
 	}
 
