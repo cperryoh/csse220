@@ -143,16 +143,12 @@ public class TwelveProblems {
 	 * Requires: for loops or while loops, strings
 	 */
 	public static int firstDifference(String one, String two) {
-		if (one.equals(two)) {
-			return -1;
-		}
-		int alike = 0;
 		for (int i = 0; i < one.length(); i++) {
-			if (one.charAt(i) == two.charAt(i)) {
-				alike++;
+			if (one.charAt(i) != two.charAt(i)) {
+				return i;
 			}
 		}
-		return alike;
+		return -1;
 	}
 
 	/**
