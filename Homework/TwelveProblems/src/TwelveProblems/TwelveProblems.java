@@ -168,21 +168,28 @@ public class TwelveProblems {
 	 * Requires: for loops, strings
 	 */
 	public static char mostCommonCharacter(String input) {
-		Hashtable<Character, Integer> map = new Hashtable<Character, Integer>();
-		for (int i = 0; i < input.length(); i++) {
-			map.put(input.charAt(i), map.getOrDefault(input.charAt(i), 0) + 1);
-		}
-		int largestValue = 0;
-		Character mostCommon = input.charAt(0);
-		for (int i = 0; i < input.length(); i++) {
-			if (map.get(input.charAt(i)) > largestValue) {
-				largestValue = map.get(input.charAt(i));
-				mostCommon = input.charAt(i);
+		ArrayList<Integer> counter = new ArrayList<Integer>();
+		ArrayList<Character> chars = new ArrayList<Character>();
+		for(int i = 0; i<input.length();i++) {
+			int index = chars.lastIndexOf(input.charAt(i));
+			if(index==-1) {
+				chars.add(input.charAt(i));
+				counter.add(1);
+			}else {
+				counter.set(index,counter.get(index)+1);
 			}
 		}
-		return mostCommon;
+		int largest = -1;
+		char mostCommonChar=' ';
+		for(int i = 0; i < counter.size();i++) {
+			if(counter.get(i)>largest) {
+				mostCommonChar = chars.get(i);
+				largest=counter.get(i);
+			}
+		}
+		System.out.print("");
+		return mostCommonChar;
 	}
-
 	/**
 	 * Finds the first number in an array divisible by 77 and returns it.
 	 * 
