@@ -260,11 +260,8 @@ public class TwelveProblems {
 	 * Requires: arrays, nested for loops
 	 */
 	public static int timesOccur(int[] shorter, int[] longer) {
-		boolean testing = false;
-		//counts how many times we find shorter in longer
-		int alikeCounter = 0;
-		
-		//when we start testing for shorting in longer, this keeps track of where we started
+		int alikeCounter=0;
+		boolean testing=false;
 		int testingStart = 0;
 		for (int i = 0; i < longer.length; i++) {
 			//if we are not testing set testing start to 0, otherwise, keep it the same
@@ -315,6 +312,7 @@ public class TwelveProblems {
 	 * if(currentString .equals("double")) { stuff }
 	 * 
 	 */
+	
 	public static ArrayList<String> doubleDouble(ArrayList<String> input) {
 		for (int i = 0; i < input.size(); i++) {
 			if (input.get(i).equals("double")) {
