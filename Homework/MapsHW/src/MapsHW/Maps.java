@@ -25,7 +25,11 @@ public class Maps {
 	 *    return value = {CDG=118, FOC=14, IND=230}
 	 */
 	public static HashMap<String, Integer> buildAirportMap(String[] airportCodes, Integer[] airportElevations) {
-		return null;
+		HashMap<String, Integer> mapOut = new HashMap<String,Integer>();
+		for(int i = 0; i<airportCodes.length;i++) {
+			mapOut.put(airportCodes[i], airportElevations[i]);
+		}
+		return mapOut;
 	} // buildAirportMap	
 	
 	
@@ -50,8 +54,20 @@ public class Maps {
 	 *    input inputString = "abcbcdc"
 	 *    return value = 'c'
 	 */
-	public static char mostCommonCharacter(String inputString) {
-		return 'Q';
+	public static char mostCommonCharacter(String input) {
+		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		for (int i = 0; i < input.length(); i++) {
+			map.put(input.charAt(i), map.getOrDefault(input.charAt(i), 0) + 1);
+		}
+		int largestValue = 0;
+		char mostCommon = input.charAt(0);
+		for (int i = 0; i < input.length(); i++) {
+			if (map.get(input.charAt(i)) > largestValue) {
+				largestValue = map.get(input.charAt(i));
+				mostCommon = input.charAt(i);
+			}
+		}
+		return mostCommon;
 	} // mostCommonCharacter	
 	
 	
