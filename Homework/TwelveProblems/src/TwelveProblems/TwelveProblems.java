@@ -61,7 +61,7 @@ public class TwelveProblems {
 		}
 		return string.charAt(string.length() - 2) == '5';
 	}
-
+	
 	/**
 	 * Determine if a given string ends with an uppercase letter.
 	 * 
@@ -143,16 +143,12 @@ public class TwelveProblems {
 	 * Requires: for loops or while loops, strings
 	 */
 	public static int firstDifference(String one, String two) {
-		if (one.equals(two)) {
-			return -1;
-		}
-		int alike = 0;
 		for (int i = 0; i < one.length(); i++) {
-			if (one.charAt(i) == two.charAt(i)) {
-				alike++;
+			if (one.charAt(i) != two.charAt(i)) {
+				return i;
 			}
 		}
-		return alike;
+		return -1;
 	}
 
 	/**
@@ -172,21 +168,28 @@ public class TwelveProblems {
 	 * Requires: for loops, strings
 	 */
 	public static char mostCommonCharacter(String input) {
-		Hashtable<Character, Integer> map = new Hashtable<Character, Integer>();
-		for (int i = 0; i < input.length(); i++) {
-			map.put(input.charAt(i), map.getOrDefault(input.charAt(i), 0) + 1);
-		}
-		int largestValue = 0;
-		Character mostCommon = input.charAt(0);
-		for (int i = 0; i < input.length(); i++) {
-			if (map.get(input.charAt(i)) > largestValue) {
-				largestValue = map.get(input.charAt(i));
-				mostCommon = input.charAt(i);
+		ArrayList<Integer> counter = new ArrayList<Integer>();
+		ArrayList<Character> chars = new ArrayList<Character>();
+		for(int i = 0; i<input.length();i++) {
+			int index = chars.lastIndexOf(input.charAt(i));
+			if(index==-1) {
+				chars.add(input.charAt(i));
+				counter.add(1);
+			}else {
+				counter.set(index,counter.get(index)+1);
 			}
 		}
-		return mostCommon;
+		int largest = -1;
+		char mostCommonChar=' ';
+		for(int i = 0; i < counter.size();i++) {
+			if(counter.get(i)>largest) {
+				mostCommonChar = chars.get(i);
+				largest=counter.get(i);
+			}
+		}
+		System.out.print("");
+		return mostCommonChar;
 	}
-
 	/**
 	 * Finds the first number in an array divisible by 77 and returns it.
 	 * 
@@ -264,11 +267,8 @@ public class TwelveProblems {
 	 * Requires: arrays, nested for loops
 	 */
 	public static int timesOccur(int[] shorter, int[] longer) {
-		boolean testing = false;
-		//counts how many times we find shorter in longer
-		int alikeCounter = 0;
-		
-		//when we start testing for shorting in longer, this keeps track of where we started
+		int alikeCounter=0;
+		boolean testing=false;
 		int testingStart = 0;
 		for (int i = 0; i < longer.length; i++) {
 			//if we are not testing set testing start to 0, otherwise, keep it the same
@@ -319,13 +319,16 @@ public class TwelveProblems {
 	 * if(currentString .equals("double")) { stuff }
 	 * 
 	 */
+	
 	public static ArrayList<String> doubleDouble(ArrayList<String> input) {
+		ArrayList<String> output = new ArrayList<String>();
 		for (int i = 0; i < input.size(); i++) {
+			output.add(input.get(i));
 			if (input.get(i).equals("double")) {
-				input.add(i, "double");
+				output.add(input.get(i));
 			}
 		}
-		return input;
+		return output;
 	}
 
 	/**
@@ -341,10 +344,16 @@ public class TwelveProblems {
 	public static ArrayList<String> threeCharacterStrings(String input) {
 		int i = 0;
 		ArrayList<String> output = new ArrayList<String>();
+		if(input.length()==3) {
+			output.add(input);
+			return output;
+		}else if(input.length()<3) {
+			return output;
+		}
 		do {
 			output.add(input.substring(i, i + 3));
 			i++;
-		} while (i + 3 == input.length());
+		} while (i + 3 <= input.length());
 		return output;
 	}
 
