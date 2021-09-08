@@ -23,7 +23,6 @@ public class HW1 {
 	public static double addFraction(int num1, int den1, int num2, int den2) {
 		return ((double)num1/(double)den1)+((double)num2/(double)den2);
 	}
-
 	/**
 	 * Takes a string that is all Ts or Fs.
 	 * 
