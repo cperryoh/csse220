@@ -205,7 +205,11 @@ public class Homework2DArrays {
 	 * For example, in an array like this: 9999 9549 9999 yields 4 The ball would
 	 * start in 1,1 (5) rolls to 4 and stops
 	 * 
-	 * 99999999999 98711111199 96999999999 95444444399 99999999999 yields 4 The ball
+	 * 99999999999 
+	 * 98711111199 
+	 * 96999999999 
+	 * 95444444399 
+	 * 99999999999 yields 4 The ball
 	 * starts at 8, follows steepest decent to 6 Then at the first 4 there is no
 	 * lower position so it stops
 	 * 
