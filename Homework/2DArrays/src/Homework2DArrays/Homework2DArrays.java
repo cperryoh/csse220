@@ -103,11 +103,7 @@ public class Homework2DArrays {
 		}
 
 		return longest;
-	}
-	public static void main(String[] args) {
-		char[][] foo = {{'a','b','c'},{'d','d','e'}};
-		System.out.println(longestRepeatSequence(foo));
-	}
+	} 
 	// longestRepeatSequence
 	/**
 	 * Given a 2D array of characters, returns a string consisting of all the
