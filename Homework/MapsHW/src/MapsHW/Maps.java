@@ -1,6 +1,10 @@
 package MapsHW;
+import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
 /**
  * Class: Maps
@@ -27,6 +31,7 @@ public class Maps {
 	public static HashMap<String, Integer> buildAirportMap(String[] airportCodes, Integer[] airportElevations) {
 		HashMap<String, Integer> mapOut = new HashMap<String,Integer>();
 		for(int i = 0; i<airportCodes.length;i++) {
+			//for each i, add the value at the index i in both arrays to the map
 			mapOut.put(airportCodes[i], airportElevations[i]);
 		}
 		return mapOut;
@@ -56,15 +61,19 @@ public class Maps {
 	 */
 	public static char mostCommonCharacter(String input) {
 		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		
+		//count characters on map
 		for (int i = 0; i < input.length(); i++) {
 			map.put(input.charAt(i), map.getOrDefault(input.charAt(i), 0) + 1);
 		}
+		
+		//loop through keys and determine the key that points to the largest value 
 		int largestValue = 0;
 		char mostCommon = input.charAt(0);
-		for (int i = 0; i < input.length(); i++) {
-			if (map.get(input.charAt(i)) > largestValue) {
-				largestValue = map.get(input.charAt(i));
-				mostCommon = input.charAt(i);
+		for (char c:map.keySet()) {
+			if(map.get(c)>largestValue) {
+				largestValue=map.get(c);
+				mostCommon=c;
 			}
 		}
 		return mostCommon;
@@ -116,7 +125,44 @@ public class Maps {
 	 *    "MA102" are in a prereq infinite loop, that is, by following prereqs of "MA102", one can eventually get back to "MA102"
 	 */
 	public static int getNumberOfCoursesToTake(HashMap<String,String> courseMap, String courseToTake) {
-		return -2;
+		String course=courseToTake;
+		ArrayList<String> vistedCourse = new ArrayList<>();
+		int preReqCount=0;
+		while(course!=""){
+			//if we have revisited the course we started at return -1
+			if(preReqCount>0&&courseToTake.equals(course)) {
+				return -1;
+			}
+			
+			
+			
+			//less elegant solution for breaking loop
+			/*//we have hit some sort of loop, assume output should be -1
+			if(preReqCount>courseMap.size()) {
+				return -1;
+			}*/
+			
+			
+			//More elegant solution for breaking a loop 
+			if(vistedCourse.contains(course)) {
+				return -1;
+			}
+			
+			
+			
+			
+			
+			
+			//get course course current course, add to preReqCount
+			vistedCourse.add(course);
+			course=courseMap.getOrDefault(course, "");
+			if(course!="") {
+				preReqCount++;
+			}
+		}
+		//when loop breaks return count
+		return preReqCount;
+		
 	} // getNumberOfCoursesToTake
 	
 	
@@ -152,7 +198,40 @@ public class Maps {
 	 *    return value = null, because no city experienced a temperature drop
 	 */
 	public static String getTemperatureDropCity(int[] recordedTemps, String[] cityNames) {
-		return "";
+		HashMap<String,ArrayList<Integer>> map = new HashMap<>();
+		//creates a map of strings that point to an array list of chronological temp readings
+		for(int i = 0; i<recordedTemps.length;i++) {
+			
+			//get array list for the city name
+			ArrayList<Integer> temps = map.getOrDefault(cityNames[i], null);
+			
+			//if it does not exist, create on
+			if(temps==null) {
+				temps = new ArrayList<>();
+			}
+			
+			//at temp at i
+			temps.add(recordedTemps[i]);
+			
+			//put arraylist back into map
+			map.put(cityNames[i], temps);
+		}
+		
+		//visit each array list
+		for(String key:map.keySet()){
+			//get temp readings for city
+			ArrayList<Integer> list = map.get(key);
+			
+			//visit each number, if last number is bigger than current, return the town name, otherwise, store last
+			int last=0;
+			for(int temp:list) {
+				if(temp<last) {
+					return key;
+				}
+				last=temp;
+			}
+		}
+		return null;
 	} // getTemperatureDropCity
 	
 	
@@ -174,7 +253,35 @@ public class Maps {
 	 *    return value = {A=[1,2], B=[3]}
 	 */
 	public static HashMap<String,ArrayList<Integer>> reverseHashmap(HashMap<Integer,String> initialMap) {		
-		return null;
+		//an array of unique values from map
+		ArrayList<String> values = new ArrayList<>();
+		
+		//has map that is the reverse of input map
+		HashMap<String, ArrayList<Integer>> outHashMap = new HashMap<String, ArrayList<Integer>>();
+		
+		//visit each key in input
+		for(int key:initialMap.keySet()) {
+			
+			
+			//check if value contains value at 'key'
+			if(!values.contains(initialMap.get(key))) {
+				//if it does not contain it, add it
+				values.add(initialMap.get(key));
+				
+				//initialize map with value at 'key' and point that to an empty array list of integers
+				outHashMap.put(initialMap.get(key), new ArrayList<>());
+			}
+		}
+		
+		//visit each number in values
+		for(String value:values) {
+			for(int key:initialMap.keySet()) {
+				if(initialMap.get(key)==value) {
+					outHashMap.get(value).add(key);
+				}
+			}
+		}
+		return outHashMap;
 	} // reverseHashmap	
 
 }
