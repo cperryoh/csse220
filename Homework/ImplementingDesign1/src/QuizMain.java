@@ -1,5 +1,7 @@
+import java.io.ObjectOutputStream.PutField;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
   *  This class is used to demonstrate a functional design
@@ -9,8 +11,39 @@ import java.util.HashMap;
 public class QuizMain {
 	
 	//TODO add instance variables here
-	
+	HashMap<Integer, Question> questions;
+	ArrayList<Quiz> quiz;
 	public QuizMain() {
+		
+		questions =new HashMap<Integer,Question>() {{
+				put(1,new Question("What is 1+1?"));
+				put(2, new Question("What is 9+10?"));
+				put(3, new Question("What is 5+5?"));
+				put(4, new Question("What is 6+6?"));
+				
+				
+		}};
+		quiz=new ArrayList<Quiz>() {{
+			ArrayList<Integer> quiz1 = new ArrayList<Integer>() {{
+				add(1);
+				add(3);
+				add(5);
+			}};
+			ArrayList<Integer> quiz2 = new ArrayList<Integer>() {{
+				add(2);
+				add(4);
+				add(5);
+			}};
+			ArrayList<Integer> quiz3 = new ArrayList<Integer>() {{
+				add(1);
+				add(2);
+				add(5);
+			}};
+			add(new Quiz(quiz1, questions, 1));
+			add(new Quiz(quiz2, questions, 2));
+			add(new Quiz(quiz3, questions, 3));
+		}};
+		
 		// TODO In order to demonstrate functionality, please follow the TODOs below
 		// You will have to create questions and quizzes when a QuizMain is created
 		
@@ -69,6 +102,7 @@ public class QuizMain {
 	 */
 	public void handleDisplayQuiz(int quizId) {
 		//TODO complete this method
+		System.out.println(questions.get(quizId));
 	}
 	
 	/**
@@ -80,6 +114,7 @@ public class QuizMain {
 	 */
 	public void handleUpdateQuizQuestion(int questionId, String questionData) {
 		//TODO complete this method
+		questions.get(questionId).setData(questionData);
 	}
 
 }

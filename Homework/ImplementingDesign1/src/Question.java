@@ -7,5 +7,20 @@
   * 
  */
 public class Question {
-
+	String data;
+	public Question(String data) {
+		this.data=data;
+		// TODO Auto-generated constructor stub
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return data;
+	}
 }
