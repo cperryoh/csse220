@@ -12,29 +12,33 @@ import java.util.HashMap;
  */
 public class Quiz {
 	int id;
-	ArrayList<Integer>questions = new ArrayList<>();
-	HashMap<Integer,Question> fullListOfQuestions = new HashMap<>();
-	public Quiz(ArrayList<Integer> questions, HashMap<Integer, Question> fullListOfQuestions, int id) {
+	ArrayList<Question> questions;
+	public Quiz(ArrayList<Question> questions, int id) {
 		this.questions=questions;
-		this.fullListOfQuestions=fullListOfQuestions;
 		this.id=id;
 		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
 	}
+	public Question getQuestion(int id) {
+		for(Question q:questions) {
+			if(q.getId()==id) {
+				return q;
+			}
+		}
+		return null;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		String out = "";
-		out+="Quiz (id= "+id+")\n";
 		for(int i = 0; i < questions.size();i++) {
-			System.out.println((i+1)+") "+fullListOfQuestions.get(questions.get(i)));
+			out+=i+") "+questions.get(i);
 		}
-		out+="\n";
 		return out;
 	}
-	public ArrayList<Integer> getQuestions() {
+	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
 }

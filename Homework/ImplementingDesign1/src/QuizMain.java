@@ -16,32 +16,31 @@ public class QuizMain {
 	public QuizMain() {
 		
 		questions =new HashMap<Integer,Question>() {{
-				put(1,new Question("What is 1+1?"));
-				put(2, new Question("What is 9+10?"));
-				put(3, new Question("What is 5+5?"));
-				put(4, new Question("What is 6+6?"));
-				
+				put(1,new Question("What is 1+1?",1));
+				put(2, new Question("What is 9+10?",2));
+				put(3, new Question("What is 5+5?",3));
+				put(4, new Question("What is 6+6?",3));
 				
 		}};
 		quiz=new ArrayList<Quiz>() {{
-			ArrayList<Integer> quiz1 = new ArrayList<Integer>() {{
-				add(1);
-				add(3);
-				add(5);
+			ArrayList<Question> quiz1 = new ArrayList<Question>() {{
+				add(questions.get(1));
+				add(questions.get(3));
+				add(questions.get(5));
 			}};
-			ArrayList<Integer> quiz2 = new ArrayList<Integer>() {{
-				add(2);
-				add(4);
-				add(5);
+			ArrayList<Question> quiz2 = new ArrayList<Question>() {{
+				add(questions.get(2));
+				add(questions.get(4));
+				add(questions.get(5));
 			}};
-			ArrayList<Integer> quiz3 = new ArrayList<Integer>() {{
-				add(1);
-				add(2);
-				add(5);
+			ArrayList<Question> quiz3 = new ArrayList<Question>() {{
+				add(questions.get(1));
+				add(questions.get(2));
+				add(questions.get(5));
 			}};
-			add(new Quiz(quiz1, questions, 1));
-			add(new Quiz(quiz2, questions, 2));
-			add(new Quiz(quiz3, questions, 3));
+			add(new Quiz(quiz1, 1));
+			add(new Quiz(quiz2, 2));
+			add(new Quiz(quiz3, 3));
 		}};
 		
 		// TODO In order to demonstrate functionality, please follow the TODOs below

@@ -8,12 +8,17 @@
  */
 public class Question {
 	String data;
-	public Question(String data) {
+	int id;
+	public Question(String data, int id) {
 		this.data=data;
+		this.id=id;
 		// TODO Auto-generated constructor stub
 	}
 	public String getData() {
 		return data;
+	}
+	public int getId() {
+		return id;
 	}
 	public void setData(String data) {
 		this.data = data;
