@@ -9,20 +9,42 @@
 public class Question {
 	String data;
 	int id;
+	
+	/**
+	 * Constructor for question class 
+	 * @param data - question prompt
+	 * @param id - number that represents question
+	 */
 	public Question(String data, int id) {
 		this.data=data;
 		this.id=id;
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+	 * @return data from object instance
+	 */
 	public String getData() {
 		return data;
 	}
+	
+	/**
+	 * @return id from object instance
+	 */
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * @param data value to change data to
+	 */
 	public void setData(String data) {
 		this.data = data;
 	}
+	
+	/**
+	 * @return the value of the class as a string, in this case the data of the question
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

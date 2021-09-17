@@ -13,14 +13,28 @@ import java.util.HashMap;
 public class Quiz {
 	int id;
 	ArrayList<Question> questions;
+	
+	/**
+	 * @param questions list of questions to be on the quiz
+	 * @param id number that identifies the quiz
+	 */
 	public Quiz(ArrayList<Question> questions, int id) {
 		this.questions=questions;
 		this.id=id;
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * 
+	 * @return id of the quiz
+	 */
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * @param id of a question that is on this quiz object
+	 * @return the question that has the same id as the parameter
+	 */
 	public Question getQuestion(int id) {
 		for(Question q:questions) {
 			if(q.getId()==id) {
@@ -29,6 +43,9 @@ public class Quiz {
 		}
 		return null;
 	}
+	/**
+	 * @return Returns at list of all questions on the quiz, listed in order, as a string 
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -38,6 +55,11 @@ public class Quiz {
 		}
 		return out;
 	}
+	
+	/**
+	 * 
+	 * @return The array of questions that are on the quiz 
+	 */
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}

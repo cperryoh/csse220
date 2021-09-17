@@ -13,6 +13,10 @@ public class QuizMain {
 	//TODO add instance variables here
 	HashMap<Integer, Question> questions;
 	ArrayList<Quiz> quiz;
+	
+	/**
+	 * Initializes the class as an example 
+	 */
 	public QuizMain() {
 		
 		questions =new HashMap<Integer,Question>() {{
