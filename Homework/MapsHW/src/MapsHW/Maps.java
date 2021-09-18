@@ -130,10 +130,6 @@ public class Maps {
 		int preReqCount=0;
 		while(course!=""){
 			//if we have revisited the course we started at return -1
-			if(preReqCount>0&&courseToTake.equals(course)) {
-				return -1;
-			}
-			
 			
 			
 			//less elegant solution for breaking loop
