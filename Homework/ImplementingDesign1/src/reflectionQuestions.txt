@@ -1,19 +1,24 @@
 Reflection Questions:
 
 1.A In your implementation could you replace each Question class with just a Java String (yes or no)? 
-
+No
 
 1.B Explain why or why not? (2-3 sentences)
+This can not be done for 2 reasons.
 
+Without a class to surround the string, the question can not be linked to an id.
+
+Also, without a class the question will not be updated throughout the program.
 
 
 2.A. What data type did you use to represent the 1-to-many relationship between QuizMain and Question? (provide the type declaration)
+I used a hash map to correlate an integer id to a question object. 
+
 
 
 2.B. What is another data type could you have used? (provide the type declaration) 
-
-
+One array list.
 
 2.C. Would that have made your implementation easier or harder to implement? Explain why? (2-3 sentences)
-
+Harder, I would have to manually look for and object with the id that im looking for instead of asking the has map for the object.
 
