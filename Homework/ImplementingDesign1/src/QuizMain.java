@@ -12,7 +12,7 @@ public class QuizMain {
 	
 	//TODO add instance variables here
 	HashMap<Integer, Question> questions;
-	ArrayList<Quiz> quiz;
+	HashMap<Integer, Quiz> quiz;
 	
 	/**
 	 * Initializes the class as an example 
@@ -24,27 +24,28 @@ public class QuizMain {
 				put(2, new Question("What is 9+10?",2));
 				put(3, new Question("What is 5+5?",3));
 				put(4, new Question("What is 6+6?",3));
+				put(5, new Question("If you dig a hole 6ft deep, how deep is the hole?",5));
 				
 		}};
-		quiz=new ArrayList<Quiz>() {{
+		quiz=new HashMap<Integer, Quiz>(){{
 			ArrayList<Question> quiz1 = new ArrayList<Question>() {{
 				add(questions.get(1));
-				add(questions.get(3));
 				add(questions.get(5));
+				add(questions.get(3));
 			}};
 			ArrayList<Question> quiz2 = new ArrayList<Question>() {{
+				add(questions.get(5));
 				add(questions.get(2));
 				add(questions.get(4));
-				add(questions.get(5));
 			}};
 			ArrayList<Question> quiz3 = new ArrayList<Question>() {{
 				add(questions.get(1));
 				add(questions.get(2));
 				add(questions.get(5));
 			}};
-			add(new Quiz(quiz1, 1));
-			add(new Quiz(quiz2, 2));
-			add(new Quiz(quiz3, 3));
+			put(1,new Quiz(quiz1, 1));
+			put(2,new Quiz(quiz2, 2));
+			put(3,new Quiz(quiz3, 3));
 		}};
 		
 		// TODO In order to demonstrate functionality, please follow the TODOs below
@@ -105,7 +106,7 @@ public class QuizMain {
 	 */
 	public void handleDisplayQuiz(int quizId) {
 		//TODO complete this method
-		System.out.println(questions.get(quizId));
+		System.out.println(quiz.get(quizId));
 	}
 	
 	/**

@@ -49,9 +49,9 @@ public class Quiz {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String out = "";
+		String out = "Quiz "+id+") \n";
 		for(int i = 0; i < questions.size();i++) {
-			out+=i+") "+questions.get(i);
+			out+=(i+1)+") "+questions.get(i)+'\n';
 		}
 		return out;
 	}
