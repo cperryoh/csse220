@@ -14,11 +14,30 @@ public class SunComponent extends JComponent {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paintComponent(g);
-		Graphics2D graphics2 = (Graphics2D) g;
+		// Get the 2D graphics object
+	     Graphics2D g2 = (Graphics2D)g;
+	     // Create a Sun using the default (parameterless) constructor, 
+	     // then draw it to the frame
+	     Sun s = new Sun();
+	     s.drawOn(g2);
 
-		Sun sun = new Sun(100, 100, 100,Color.yellow);
-		sun.drawOn(graphics2);
+	     // Draw a rectangle around the default sun
+	     g2.drawRect(30, 30, 240, 240);
+
+	     // Draw a rectangle around a new sun in a particular position
+	     s = new Sun(550, 100, 50, Color.BLUE);
+	     s.drawOn(g2);
+	     g2.drawRect(515, 65, 120, 120);
+
+	     // Draw little suns
+	     double x = SunComponent.LITTLE_SUNS_X_OFFSET;
+	     for (int i = 0; i < SunComponent.NUM_LITTLE_SUNS; i++) {	
+	         s = new Sun(x,
+	               SunComponent.LITTLE_SUNS_Y,
+	               SunComponent.LITTLE_SUN_SIZE, 
+	               SunComponent.LITTLE_SUN_COLOR);
+	         s.drawOn(g2);
+	         x+= SunComponent.LITTLE_SUN_SEPARATION;
+	     }
 	}
 }

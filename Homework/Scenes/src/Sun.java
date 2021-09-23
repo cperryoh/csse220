@@ -11,29 +11,35 @@ public class Sun {
 	 private static final double DEFAULT_SUN_Y = 100.0;
 	 private static final Color DEFAULT_SUN_COLOR = Color.YELLOW;
 	 private static final double LITTLE_SUNS_X_OFFSET = 50; 
-	 int x,y,circleDiameter,rayLength,rayWidth, rayDistanceFromSun;
+	 double x,y,circleDiameter,rayLength,rayWidth, rayDistanceFromSun;
 	 Color color;
-	public Sun(int x, int y, int circleDiameter, Color color) {
+	public Sun(double x, double y, double circleDiameter, Color color) {
 		super();
-		this.x = x;
-		this.y = y;
-		this.circleDiameter = circleDiameter;
+		this.x =  x;
+		this.y =  y;
+		this.circleDiameter = (int) circleDiameter;
 		this.color = color;
+	}
+	public Sun() {
+		this.x=DEFAULT_SUN_X;
+		this.y=DEFAULT_SUN_Y;
+		this.circleDiameter=DEFAULT_SUN_DIAMETER;
+		this.color=DEFAULT_SUN_COLOR;
 	}
 	public void drawOn(Graphics2D g2) {
 		g2.setColor(color);
-		g2.fillOval(x, y, circleDiameter, circleDiameter);
+		g2.fillOval((int)x, (int)y, (int)circleDiameter, (int)circleDiameter);
 		g2.setColor(BORDER_COLOR);
-		g2.drawOval(x, y, circleDiameter+2, circleDiameter+2);
-		int centerOfSunX=(circleDiameter/2)+x;
-		int centerOfSunY=(circleDiameter/2)+y;
+		g2.drawOval((int)x, (int)y, (int)circleDiameter+2, (int)circleDiameter+2);
+		double centerOfSunX=(circleDiameter/2)+x;
+		double centerOfSunY=(circleDiameter/2)+y;
 		for(int i = 0;i<360;i+=45) {
 			drawRay(g2, i, centerOfSunX, centerOfSunY);
 		}
 		
 		
 	}
-	void drawRay(Graphics2D g2,double angle,int x,int y) {
+	void drawRay(Graphics2D g2,double angle,double x,double y) {
 		double radians = (angle*Math.PI)/180.0;
 		g2.setColor(color);
 		int rayW=(int) (circleDiameter*RAY_WIDTH_SCALE);

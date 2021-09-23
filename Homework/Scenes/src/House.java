@@ -12,6 +12,7 @@ public class House {
 		// TODO: save off the parameters into instance variables
 		this.x=x;
 		this.y=y;
+		this.color=color;
 	}
 
 	public void drawOn(Graphics2D g2) {
@@ -19,7 +20,7 @@ public class House {
 		// Polygon)
 		g2.setColor(color);
 		g2.fillRect(x, y, WIDTH, HEIGHT);
-		g2.drawLine(x, y, x+(WIDTH/2), y-HEIGHT);
-		g2.drawLine(x+WIDTH, y, (x+WIDTH)-(WIDTH/2), y-HEIGHT);
+		g2.drawLine(x, y, x+(WIDTH/2), y-ROOF_HEIGHT);
+		g2.drawLine(x+WIDTH, y, (x+WIDTH)-(WIDTH/2), y-ROOF_HEIGHT);
 	}
 }
