@@ -1,0 +1,38 @@
+The CSSE department would like us to create an app that tracks all the students that a particular professor has had in a class.  A professor has had a student in his/her class if the student has signed up for any one of his/her classes, even if the student later dropped the class.  In this program, we only need to track the names and email addresses of both the professors and the students (assume that email addresses will be unique for all professors and students), no other information is required for this application. The app must be able to do the following items:
+
+Add (and track) professors and students
+
+Add the case when a professor has had a student in a class
+
+Given a professor's email address, print all student names and email addresses who that professor has had in a class
+
+Given a student's email address, print all names and email addresses of the professors who have had this student in a class
+
+Given two professor email addresses, print all the students that both professors had in any class (the intersection of the sets of students)
+
+Given a student email address and a professor email address, print a statement indicating that the professor has had that student in at least one class, or never had that student in a class
+
+@startuml
+class DepartmentMain{
++addProfessor(email:String,name:String):void
++printCommonStudents(profEmailOne:String, profEmailTwo:String):void
++printProfsWithStudent(studentEmail:String):void
++printProfStudents(profEmail:String):void
++printIfStudentHadProf(studnetEmail:String,profEmail:String):void
+}
+class Professor{
++printCommonStudents(otherProfEmail:String):void
++hasHadStudnet(studentEmail:String):boolean
++printAllStudents():void
+-email:String
+-name:String
+}
+class Student{
+-email:String
+-name:String
++getEmail():String
++getName():String
+}
+DepartmentMain->"*"Professor
+Professor->"*"Student
+@enduml

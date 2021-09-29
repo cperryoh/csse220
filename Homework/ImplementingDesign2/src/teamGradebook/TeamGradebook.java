@@ -1,12 +1,13 @@
 package teamGradebook;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
 public class TeamGradebook {
 
-	private ArrayList<Student> students;
-	private ArrayList<Team> teams;
+	private HashMap<String, Student> students;
+	private HashMap<String, Team> teams;
 	
 	/**
 	 * Constructor - initializes the fields of TeamGradebook
@@ -15,6 +16,8 @@ public class TeamGradebook {
 	 */
 	public TeamGradebook() {
 		//TODO: add initialization code
+		students=new HashMap<String, Student>();
+		teams = new HashMap<>();
 	}
 	
 	/**
@@ -32,7 +35,8 @@ public class TeamGradebook {
 		// first create a new student object with the given name
 		// then add it to the students list in the gradebook
 		// then return "ok"
-		return null;
+		students.put(studentName, new Student(studentName));
+		return "ok";
 	}
 
 	/**
@@ -54,8 +58,8 @@ public class TeamGradebook {
 	 * @return
 	 */
 	private String handleAddAbsence(String studentName) {
-		
-		return null;
+		getStudentByName(studentName).addAbsence();
+		return "ok";
 	}
 
 	/**
@@ -73,7 +77,7 @@ public class TeamGradebook {
 	 * @return
 	 */
 	private String handleGetAbsences(String studentName) {
-		return null;
+		return Integer.toString(getStudentByName(studentName).getAbsences());
 	}
 	
 	
@@ -88,7 +92,7 @@ public class TeamGradebook {
 	 */
 	private String handleGetStudentGrades(String studentName) {
 		//TODO: Your code here
-		return null;
+		return getStudentByName(studentName).getGrades().toString();
 	}
 
 	
@@ -115,7 +119,16 @@ public class TeamGradebook {
 		// and use it in this function
 		
 		//TODO: Your code here
-		return null;
+		Team team = new Team(teamName);
+		for(String name:memberNames) {
+			Student student = getStudentByName(name);
+			if(student.equals(null)) {
+				return name+" is not a name that has been added!";
+			}
+			student.addToTeam(team);
+		}
+		teams.put(teamName, team);
+		return "ok";
 	}
 
 	/**
@@ -127,10 +140,11 @@ public class TeamGradebook {
 	 * @param name the name of the student for whom to search
 	 * @return student object with the name or null
 	 */
-	public  Student getStudentByName(String name) {
+	public Student getStudentByName(String name) {
 
 		//TODO: Your code here		
-		return null;
+		return students.getOrDefault(name,null);
+		
 	}
 
 	/**
@@ -144,7 +158,13 @@ public class TeamGradebook {
 	 */
 	private String handleAddGrade(String teamName, double grade) {
 		//TODO: Your code here
-		return null;
+		Team team = teams.getOrDefault(teamName, null);
+		if(team==null) {
+			return "that is not a valid team name";
+		}else {
+			team.addGrade(grade);
+		}
+		return "ok";
 	}
 	
 	
@@ -161,7 +181,7 @@ public class TeamGradebook {
 	 */
 	private String handleGetAverage(String studentName) {
 		//TODO: Your code here
-		return null;
+		return Integer.toString((int)getStudentByName(studentName).getAverage());
 	}
 	
 	/**
@@ -193,7 +213,16 @@ public class TeamGradebook {
 	 */
 	private String handleGetBestTeam() {
 		//TODO: Your code here
-		return null;
+		double best=Integer.MIN_VALUE;
+		Team bestTeam=null;
+		for(String key:teams.keySet()) {
+			Team team = teams.get(key);
+			if(best<team.getAverage()) {
+				best = team.getAverage();
+				bestTeam = team;
+			}
+		}
+		return bestTeam.getName();
 	}
 	
 	/**
