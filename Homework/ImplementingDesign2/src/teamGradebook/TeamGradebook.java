@@ -122,8 +122,9 @@ public class TeamGradebook {
 		Team team = new Team(teamName);
 		for(String name:memberNames) {
 			Student student = getStudentByName(name);
-			if(student.equals(null)) {
-				return name+" is not a name that has been added!";
+			if(student==null) {
+				student = new Student(name);
+				students.put(name, student);
 			}
 			student.addToTeam(team);
 		}
@@ -181,7 +182,7 @@ public class TeamGradebook {
 	 */
 	private String handleGetAverage(String studentName) {
 		//TODO: Your code here
-		return Integer.toString((int)getStudentByName(studentName).getAverage());
+		return Integer.toString(getStudentByName(studentName).getAverage());
 	}
 	
 	/**

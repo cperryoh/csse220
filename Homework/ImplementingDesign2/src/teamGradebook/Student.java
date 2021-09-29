@@ -18,16 +18,17 @@ public class Student {
 	public ArrayList<Double> getGrades(){
 		ArrayList<Double> grades = new ArrayList<>();
 		for(Team team:teams) {
-			grades.add(team.getAverage());
+			grades.addAll(team.getGrades());
 		}
 		return grades;
 	}
-	public double getAverage() {
+	public int getAverage() {
 		double sum=0;
-		for(Team team:teams) {
-			sum+=team.getAverage();
+		ArrayList<Double> grades = getGrades();
+		for(double grade:grades){
+			sum+=grade;
 		}
-		return sum/teams.size();
+ 		return (int)(sum/grades.size()+0.5);
 	}
 	public void addAbsence() {
 		absences++;

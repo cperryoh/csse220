@@ -22,11 +22,16 @@ public class Team {
 		return name;
 	}
 	public double getAverage() {
-		double sum=0;
-		for(double grade:grades) {
-			sum+=grade;
+		if(grades.size()!=0) {
+			double sum=0;
+			for(double grade:grades) {
+				sum+=grade;
+			}
+			return sum/grades.size();
+		}else {
+			return 0;
 		}
-		return sum/grades.size();
+		
 	}
 	
 	
