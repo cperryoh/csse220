@@ -212,35 +212,90 @@ public class Homework2DArrays {
 	 * @param map map indicating elevation
 	 * @return height where the ball stops
 	 */
+	
+	
+	/*
+	 * Example of what the function does, it follows the path of the arrow
+	 * 
+	 * Height map:
+	 * 99999999999 
+	 * 98711111199 
+	 * 96999999999 
+	 * 95444444399 
+	 * 99999999999 
+	 * 
+	 * X = start
+	 * - = the path
+	 * . = the end(lowest point on the path)
+	 * 
+	 * Path(ball starts at (1,1) and (0,0) is the top left corner):
+	 * 99999999999 
+	 * 9X-.1111199 
+	 * 96999999999 
+	 * 95444444399 
+	 * 99999999999 
+	 * */
 	public static int ballRestElevation(int[][] map) {
 		int x=1,y=1;
 		int lowestVal = 100;
+		
+		//loops forever (in theory)
 		while (true) {
-			// search near by
+			//set default values for max x and and max y
+			
+			//these will store the x and y coordinates of the lowest valued neighbor.
 			int lowestX=100;
 			int lowestY=100;
+			
+			//loop through all near cells
+			/*
+			 * x=not neigboor
+			 * .=neighboor
+			 * s=self
+			 * x.x
+			 * .s.
+			 * x.x
+			 */
 			for (int x_ = -1; x_ <= 1; x_++) {
 				for (int y_ = -1; y_ <= 1; y_++) {
+					//add the offset x and y(x_ and y_) to the current x and y both of which are 1 from the start since that is where the program is supposed to begin
 					int checkX = x_ + x;
 					int checkY = y_ + y;
-					//not diagonal but still check current square against surrounding squares
+					
+					//ensure that the only squares we are checking is the direct neighbors(we do not want to recognize our our coordinates or any diagonals as valid coordinates to check
 					boolean isValidCoords=Math.abs(x_)!=Math.abs(y_)||(x_==0&&y_==0);
 					
+					
+					//if the coords are valid and the checkx and checky are in bounds, move on. Ex: if we have a 60x60 array neither (-1,-1) or (61,61) would be in bounds
 					if (isInBounds(checkX, checkY, map)&& isValidCoords) {
+						
+						//if the coords that we are checking is lower than the current lowest value. Set lowest value to the value at the current coords and log the x and y as the coords with the lowest value
 						if (map[checkY][checkX] < lowestVal) {
+							
+							//log what the lowest value was
 							lowestVal = map[checkY][checkX];
+							
+							//log where the lowest value neighbor was(x and y coords)
 							lowestX=checkX;
 							lowestY=checkY;
 						}
 					}
 				}
 			}
+			
+			//before we move on to the next lowest neighbor, we have to build in some way for the loop to break
+			//in this case we check if the lowest value found after checking the neighbors, then return the lowest value as we have reached the lowest point on 
 			if(lowestVal==map[y][x]) {
 				return lowestVal;
 			}
+			
+			//if we have yet to hit the lowest value (we didnt return a value in the line above), that means one of the neighbors was lower than our current position. Change our current position to the lowest value we found.
+			
 			x=lowestX;
 			y=lowestY;
 			System.out.println("");
+			
+			//now we start the process over again with the new x and y coords.
 		}
 	} // ballRestElevation
 
