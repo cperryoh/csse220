@@ -256,6 +256,8 @@ public class Homework2DArrays {
 			 * .s.
 			 * x.x
 			 */
+			
+			//loops through -1 to 1 for both x and y
 			for (int x_ = -1; x_ <= 1; x_++) {
 				for (int y_ = -1; y_ <= 1; y_++) {
 					//add the offset x and y(x_ and y_) to the current x and y both of which are 1 from the start since that is where the program is supposed to begin
