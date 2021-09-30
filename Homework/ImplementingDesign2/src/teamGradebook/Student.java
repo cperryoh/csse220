@@ -4,8 +4,7 @@ import java.util.HashMap;
 
 
 public class Student {
-	
-	//adding comment
+	// test 3
 	// TODO: Complete this class
 	String name;
 	int absences;
