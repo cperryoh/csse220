@@ -1,5 +1,6 @@
 package recursionPart1;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -19,7 +20,10 @@ public class Part1Problems {
 	 * 
 	 */
 	public static int summation(int value){
-		return 0;
+		if (value==1) {
+			return 1;
+		}
+		return value+summation(value-1);
 	} // summation
 	
 	/**
@@ -32,7 +36,10 @@ public class Part1Problems {
 	 * 
 	 */
 	public static String technicallyGramaticallyCorrect(int numberOfBuffalo){
-		return "xyz";
+		if(numberOfBuffalo==0) {
+			return "";
+		}
+		return "Buffalo "+technicallyGramaticallyCorrect(numberOfBuffalo-1);
 	} // technicallyGramaticallyCorrect
 	
 	/**
@@ -46,7 +53,22 @@ public class Part1Problems {
 	 * @return a new string with removals and replacements
 	 */
 	public static String weirdoString(String stringInput){
-		return "xyz";
+		char c;
+		
+		try {
+			c = stringInput.charAt(0);
+			stringInput=stringInput.substring(1);
+		} catch (Exception e) {
+			return "";
+		}
+		if(c=='C') {
+			return "QQQ"+weirdoString(stringInput);
+		}else if(c=='a'||c=='b'){
+			return weirdoString(stringInput);
+		}
+		else {
+			return c+weirdoString(stringInput);
+		}
 	} // weirdoString
 	
 	/**
@@ -58,7 +80,16 @@ public class Part1Problems {
 	 * @return sum of values in the list
 	 */
 	public static int arrayListSummation(ArrayList<Integer> inputList){
-		return 0;
+		int num=0;
+		if(!inputList.isEmpty()) {
+			num = inputList.get(0);
+			inputList.remove(0);
+			if(inputList.size()!=0) {
+				int sum =arrayListSummation(inputList);
+				return num+sum;
+			}
+		}
+		return num;
 	} // arrayListSummation
 	
 	/**
@@ -70,7 +101,15 @@ public class Part1Problems {
 	 * @return number of 3s in inputNumber's prime factorization
 	 */
 	public static int countNumberOf3sInPrimeFactorization(int inputNumber){
-		return -1;
+		if(inputNumber==0) {
+			return 0;
+		}
+		if(inputNumber%3==0) {
+			return 1+countNumberOf3sInPrimeFactorization(inputNumber/3);
+		}
+		else {
+			return 0;
+		}
 	} // countNumberOf3sInPrimeFactorization
 	
 	/**
@@ -84,8 +123,33 @@ public class Part1Problems {
 	 * @return true if the braces were appropriately matched
 	 * 
 	 */
+	static HashMap<Character, Character> bracketMap = new HashMap<Character, Character>(){{
+		put('(',')');
+		put('{', '}');
+		put('[', ']');
+		put('<', '>');
+	}};
+	public static void main(String[] args) {
+		noDoubledLetters("works");
+	}
 	public static boolean bracketMatch(String inputString){
-		return false;
+		if(inputString.length()==2) {
+			return bracketMap.get(inputString.charAt(0))==inputString.charAt(1);
+		}
+		if(inputString.length()%2!=0) {
+			return false;
+		}
+		if(inputString.equals("")) {
+			return true;
+		}
+		String newStr=inputString.substring(1,inputString.length()-1);
+		char open = inputString.charAt(0);
+		char closed = inputString.charAt(inputString.length()-1);
+		if(!bracketMap.keySet().contains(open)) {
+			return false;
+		}
+		boolean isValid = (bracketMap.get(open)==closed);
+		return isValid&&bracketMatch(newStr);
 	} // bracketMatch
 	
 	/**
@@ -96,7 +160,10 @@ public class Part1Problems {
 	 * @return true if the input value is an even power of 3, false otherwise
 	 */
 	public static boolean evenPowerOfThree(int inputValue){
-		return false;
+		if(inputValue%3==0){
+			return !evenPowerOfThree(inputValue/3);
+		}
+		return true;
 	} // evenPowerOfThree
 	
 	/**
@@ -109,7 +176,12 @@ public class Part1Problems {
 	 * @return true if the string has no doubled letters, false if it has doubled letters
 	 */
 	public static boolean noDoubledLetters(String inputString){
-		return false;
+		if(inputString.length()<=1) {
+			return true;
+		}
+		String newStr = inputString.substring(1);
+		boolean isDif = newStr.charAt(0)!=inputString.charAt(0);
+		return isDif&&noDoubledLetters(newStr);
 	} // noDoubledLetters
 	
 	/**
@@ -130,6 +202,18 @@ public class Part1Problems {
 	 * @return true if you can win the numbers game, false otherwise
 	 */
 	public static boolean numbersGame(int startingNumber){
-		return false;
+		if(startingNumber==1) {
+			return true;
+		}
+		if(startingNumber<1) {
+			return false;
+		}
+		int div=0;
+		int sub=0;
+		if(startingNumber%3==0) {
+			div=startingNumber/3;
+		}
+		sub=startingNumber-7;
+		return numbersGame(div)||numbersGame(sub);
 	} // numbersGame
 } // end class Part1Problems
