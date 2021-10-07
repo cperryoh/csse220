@@ -33,7 +33,21 @@ public class Part2Problems {
 	 */
 
 	public static boolean findIn(int[] input, int[] toFind) {
-		return false;
+		if(toFind.length==input.length&&toFind.equals(toFind)) {
+			return true;
+		}else if(toFind.length==input.length) {
+			return false;
+		}
+		int[] newArr = new int[toFind.length-1];
+		for(int i = 0; i < newArr.length; i++) {
+			newArr[i]=toFind[i+1];
+		}
+		for(int i = 0; i < input.length; i++) {
+			if(input[i]!=toFind[i]) {
+				return false||findIn(input, newArr);
+			}
+		}
+		return (true||findIn(input, newArr));
 	}
 
 	/**
