@@ -31,23 +31,31 @@ public class Part2Problems {
 	 * @param toFind - the array to find in the other
 	 * @return true if toFind is found in input, false otherwise
 	 */
-
+	public static void main(String[] args) {
+		int[] input = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		int[] toFind = new int[] { 7, 9 };
+		System.out.println(findIn(input, toFind));
+	}
+	public static int[] getSubArray(int begin,int end, int[] array) {
+		int[] newArr = new int[end-begin+1];
+		for(int i = begin; i <= end;i++) {
+			newArr[i-begin]=array[i];
+		}
+		return newArr;
+	}
 	public static boolean findIn(int[] input, int[] toFind) {
-		if(toFind.length==input.length&&toFind.equals(toFind)) {
+		int[] newArr = getSubArray(1, input.length-1, input);
+		int[] newArrSub = getSubArray(0, toFind.length-1, newArr);
+		int[] oldArrSub = getSubArray(0, toFind.length-1, input);
+		if(toFind.equals(input)||toFind.equals(newArr)) {
 			return true;
-		}else if(toFind.length==input.length) {
+		}
+		if(toFind.equals(newArrSub)||toFind.equals(oldArrSub)) {
+			return true;
+		}else if(newArr.length==toFind.length) {
 			return false;
 		}
-		int[] newArr = new int[toFind.length-1];
-		for(int i = 0; i < newArr.length; i++) {
-			newArr[i]=toFind[i+1];
-		}
-		for(int i = 0; i < input.length; i++) {
-			if(input[i]!=toFind[i]) {
-				return false||findIn(input, newArr);
-			}
-		}
-		return (true||findIn(input, newArr));
+		return false||findIn(newArr, toFind);
 	}
 
 	/**
