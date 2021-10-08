@@ -1,5 +1,7 @@
 package recursionPart2;
 
+import java.util.Currency;
+
 /**
  * Class: Part2Problems
  * @author CSSE Faculty
@@ -32,8 +34,21 @@ public class Part2Problems {
 	 * @return true if toFind is found in input, false otherwise
 	 */
 	public static void main(String[] args) {
-		int[] input = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-		int[] toFind = new int[] { 7, 9 };
+		final int inputMaxSize = 100;
+		final int toFindMaxSize = 5;
+		int[] input = new int[inputMaxSize];
+		int[] toFind = new int[toFindMaxSize];
+
+		for (int i = 0; i < inputMaxSize; i++) {
+			input[i] = i;
+		} // end for
+
+		for (int i = 0, index = 0; i < 100; i++) {
+			if ((i % 9) == 0)
+				toFind[index++] = i;
+			if (index >= toFindMaxSize)
+				break;
+		} // end for
 		System.out.println(findIn(input, toFind));
 	}
 	public static int[] getSubArray(int begin,int end, int[] array) {
@@ -43,14 +58,26 @@ public class Part2Problems {
 		}
 		return newArr;
 	}
+	public static boolean isEqualArray(int[] arr1,int[] arr2) {
+		if(arr1.length!=arr2.length) {
+			return false;
+		}
+		for(int i = 0; i < arr1.length;i++ ) {
+			if(arr1[i]!=arr2[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 	public static boolean findIn(int[] input, int[] toFind) {
 		int[] newArr = getSubArray(1, input.length-1, input);
-		int[] newArrSub = getSubArray(0, toFind.length-1, newArr);
-		int[] oldArrSub = getSubArray(0, toFind.length-1, input);
-		if(toFind.equals(input)||toFind.equals(newArr)) {
+
+		if(isEqualArray(newArr, toFind)||isEqualArray(input, toFind)) {
 			return true;
 		}
-		if(toFind.equals(newArrSub)||toFind.equals(oldArrSub)) {
+		int[] newArrSub = getSubArray(0, toFind.length-1, newArr);
+		int[] oldArrSub = getSubArray(0, toFind.length-1, input);
+		if(isEqualArray(newArrSub, toFind)||isEqualArray(oldArrSub, toFind)) {
 			return true;
 		}else if(newArr.length==toFind.length) {
 			return false;
@@ -76,7 +103,6 @@ public class Part2Problems {
 	 *         exist in the input String
 	 */
 	public static int findThirdCapital(String input) {
-		return -10;
 	}
 
 	/**
