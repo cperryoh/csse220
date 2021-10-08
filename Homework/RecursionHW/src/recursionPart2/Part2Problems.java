@@ -1,10 +1,13 @@
 package recursionPart2;
 
+import java.util.ArrayList;
+
 /**
  * Class: Part2Problems
- * @author CSSE Faculty
- * Purpose: Provide practice implementing recursive operations that require a separate recursive helper operation
- *  
+ * 
+ * @author CSSE Faculty Purpose: Provide practice implementing recursive
+ *         operations that require a separate recursive helper operation
+ * 
  */
 public class Part2Problems {
 
@@ -32,8 +35,26 @@ public class Part2Problems {
 	 * @return true if toFind is found in input, false otherwise
 	 */
 
+	public static boolean findInHelper(int[] input, int[] toFind, int inputIndex, int findIndex) {
+		if (inputIndex >= input.length - 1 && input[input.length - 1] != toFind[findIndex]) {
+			return false;
+		}
+		if (toFind.length - 1 == findIndex) {
+			if (input[inputIndex] == toFind[findIndex]) {
+				return true;
+			}
+			if (inputIndex == input.length - 1) {
+				return false;
+			}
+		}
+		if (input[inputIndex] == toFind[findIndex]) {
+			findIndex++;
+		}
+		return findInHelper(input, toFind, inputIndex + 1, findIndex);
+	}
+
 	public static boolean findIn(int[] input, int[] toFind) {
-		return false;
+		return findInHelper(input, toFind, 0, 0);
 	}
 
 	/**
@@ -53,8 +74,25 @@ public class Part2Problems {
 	 * @return the index of the third capital letter, -1 if a third one does not
 	 *         exist in the input String
 	 */
+	public static int thirdCapitalHelper(int index, int upperCounter, String str) {
+		if (Character.isUpperCase(str.charAt(index))) {
+			upperCounter++;
+		}
+
+		if (upperCounter == 3) {
+			return index;
+		} else if (index == str.length() - 1) {
+			return -1;
+		}
+		return thirdCapitalHelper(index + 1, upperCounter, str);
+	}
+
 	public static int findThirdCapital(String input) {
-		return -10;
+		/*
+		 * int upperCounter = 0; for(int i = 0; i < input.length();i++) {
+		 * if(Character.isUpperCase(input.charAt(i))) { upperCounter++; } }
+		 */
+		return thirdCapitalHelper(0, 0, input);
 	}
 
 	/**
@@ -91,8 +129,53 @@ public class Part2Problems {
 	 * @param input - The array of integers
 	 * @return the highest possible sum of any subsequence
 	 */
-	public static int highestSubsequenceSum(int[] input) {
+	public static int sumArray(int start, int end, int offset, int[] array) {
+		if (offset + start == end) {
+			System.out.print(array[offset + start] + "(" + (start + offset) + ")=");
+			return array[offset + start];
+		}
+		System.out.print(array[offset + start] + "(" + (start + offset) + ")+");
+		return array[offset + start] + sumArray(start, end, offset + 1, array);
+	}
 
-		return -1;
+	public static ArrayList<Integer> getSubSequences(int start, int length, int[] array, ArrayList<Integer> sums) {
+		if (start == array.length - 1) {
+			sums.add(array[start]);
+			return sums;
+		}
+		if (start + length == array.length - 1) {
+			int sum = sumArray(start, start + length, 0, array);
+			System.out.print(sum + "\n");
+			sums.add(sum);
+			return getSubSequences(start + 1, 0, array, sums);
+		}
+		int sum = sumArray(start, start + length, 0, array);
+		System.out.print(sum + "\n");
+		sums.add(sum);
+		return getSubSequences(start, length + 1, array, sums);
+	}
+
+	public static int findHighest(ArrayList<Integer> ints, int index, int highest) {
+		if (ints.size() - 1 == index) {
+			if (ints.get(index) > highest) {
+				highest = ints.get(index);
+			}
+			return highest;
+		}
+		if (ints.get(index) > highest) {
+			highest = ints.get(index);
+		}
+		return findHighest(ints, index + 1, highest);
+	}
+
+	public static void main(String[] args) {
+		int[] testInput = new int[] { -1, 2, 3, 4, -10, 5, 6, -3, 7, -20, 2, 3 };
+		System.out.println(highestSubsequenceSum(testInput)+"\n");
+	}
+
+	public static int highestSubsequenceSum(int[] input) {
+		ArrayList<Integer> arrayList = getSubSequences(0, 0, input, new ArrayList<Integer>());
+		System.out.println(arrayList);
+		return findHighest(arrayList, 0, 0);
 	}
 }

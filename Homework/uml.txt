@@ -1,21 +1,25 @@
-In a single player spaceship racing game, the mechanics surrounding ships are particularly important.  Each ship has its own current position, rotation, and velocity.  Rotation and velocity can be increased or decreased by the player’s controller - this is how the ship is steered. When a ship or multiple ships are computer controlled there are 4 different flying strategies that control how the ship moves in the game. When the player controls his/her ship, the ship gets input from the player’s controller which sets rotation and velocity. There are two commands to consider: updatePlayerInput which is called when a player presses a key on the controller and moveAllShips which updates the position of all ships in the game based on their current settings.
+At a particular company, departments are composed of named teams and each team has a yearly budget. Teams have both employees and equipment, each of which have a yearly cost. A team is over budget if the total yearly cost of all employees and equipment is greater than the team's budget. It should be possible to get a list of all teams within a department that are over budget.
 @startuml
-class ShipMain{
-+handleUpdateShips(inputData)
-+updatePlayerInput(inputData)
--stratTypes:Int[]
--ships:ArrayList<Ship>
-
+class CompanyMain{
++handlePrintAllOverBudgetTeams()
 }
-class Ship{
--flyingStrat
--isPlayerShip
--rotation
--velocity
-+updatePosBasedOnSettings(InputData)
-+updatePosBasedOnPlayerInput(InputData)
-+setStratagy(stratagy:int)
-+setIsPlayer(isPlayer:boolean)
+class Department{
+-name:String
++getName()
++getOverbudgetTeams()
 }
-ShipMain->"*"Ship
+class Team{
+-name
+-budget
++isOverBudget()
+}
+interface Expendeture{
+-cost:int
++getCost():int
+}
+class Equipment implements Expendeture{}
+class Employee implements Expendeture{}
+Team-->"*"Expendeture
+Department-->"*"Team
+CompanyMain-->"*"Department
 @enduml

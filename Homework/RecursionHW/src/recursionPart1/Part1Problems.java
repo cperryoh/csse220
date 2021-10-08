@@ -214,9 +214,6 @@ public class Part1Problems {
 			div=startingNumber/3;
 		}
 		sub=startingNumber-7;
-		if(div==1||sub==1) {
-			return true;
-		}
 		return numbersGame(div)||numbersGame(sub);
 	} // numbersGame
 } // end class Part1Problems
