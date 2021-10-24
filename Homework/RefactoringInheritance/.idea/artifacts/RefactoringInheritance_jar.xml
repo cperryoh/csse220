@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="RefactoringInheritance:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/RefactoringInheritance_jar</output-path>
+    <root id="archive" name="RefactoringInheritance.jar">
+      <element id="module-output" name="RefactoringInheritance" />
+    </root>
+  </artifact>
+</component>
