@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-
 import exceptions.MissingGradeException;
 import exceptions.NegativeGradeException;
 

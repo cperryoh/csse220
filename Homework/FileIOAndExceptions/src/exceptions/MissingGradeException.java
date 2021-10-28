@@ -6,6 +6,6 @@ package exceptions;
   //like any other class other than the fact that they're 
   //thrown
 
-public class MissingGradeException {
+public class MissingGradeException extends Throwable {
 	
 }

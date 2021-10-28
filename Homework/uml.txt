@@ -1,30 +1,10 @@
-EIT needs to keep inventory of the laptops from various professors that are currently being serviced by EIT. It is important for EIT to know the current OS version installed so that it can be updated while being serviced, if necessary. Also, EIT must track the laptop's owner. At the end of each workday the manager of EIT wants two different reports generated: 
-1.     A service ticket report that lists each laptop being serviced and includes: the laptop type (e.g., MacBook, Surface, etc.), its OS version, and its owner
-2.     A laptop owner report that just lists of all the owners of laptops currently being serviced by EIT
 @startuml
-class LaptopServiceInventorySystem{
-+main
--handleGenerateServiceTicketReport()
--handleGenerateLaptopOwnerReport()
+class SolarSystemMain{
 }
-Interface Laptop{
--OSType:String
--OwnerName:String
-+getOwnerName():String
-+generateServiceTicketReport()
-+getOSType():String
+class SolarSystem{
 }
-class MacBook extends Laptop{
--MacBookOSVersion:String
-+getMacOSVersion():String
+class Moon{
 }
-class ChromeBook extends Laptop{
-+getChromeOSVersion():String
--ChromeOSVersion:String
+class Planet{
 }
-class SurfaceBook extends Laptop{
--WindowsOSVersion:String
-+getWindowsOSVersion():String
-}
-Laptop->"*"LaptopServiceInventorySystem
 @enduml
