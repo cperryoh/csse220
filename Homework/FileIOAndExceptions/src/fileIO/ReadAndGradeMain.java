@@ -14,7 +14,7 @@ import exceptions.NegativeGradeException;
 public class ReadAndGradeMain {
 	
 	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 		
 		/* 
 		 * TODO 1: Read through the file of names with email addresses, and form a list of all
@@ -39,9 +39,14 @@ public class ReadAndGradeMain {
 		 *         jane.smith@gmail.com
 		 */
 		String filename = "AllNames.csv";
-		ArrayList<Person> p = new ArrayList<>();
+		HashMap<String,Person> people = new HashMap<>();
 		File f = new File(filename);
-		Scanner scanner = new Scanner(f);
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(f);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		ArrayList<String> emailWarnings = new ArrayList<String>();
 		//set up scanner to read here and the rest of your code here
 		String header = scanner.nextLine();
@@ -51,7 +56,8 @@ public class ReadAndGradeMain {
 			if(!item.get(2).equals(properEmail.toLowerCase())){
 				emailWarnings.add(item.get(2));
 			}else{
-				p.add(new Person(item.get(1),item.get(0),item.get(2)));
+				Person person = new Person(item.get(1),item.get(0),item.get(2));
+				people.put(person.email,person);
 			}
 		}
 		scanner.close();
@@ -78,11 +84,28 @@ public class ReadAndGradeMain {
 		System.out.println("\n\nNow calculating grades");
 		
 		File dir = new File("grades/");
+		String[] list = dir.list();
 		ArrayList<String> filesWithNoName = new ArrayList<String>();
 		ArrayList<String> filesWithMissing = new ArrayList<String>();
 		ArrayList<String> filesWithNegative = new ArrayList<String>();
+		for(String file:list){
+			try {
+				GradeFileReader.readGradeFile("grades/"+file);
+			} catch (MissingGradeException e) {
+				filesWithMissing.add(file);
+				GradeFileReader.alterGradeInFile("grades/"+file,e.getLine(), e.getIndex(), false);
+				System.err.println("Modded:\n");
+				System.err.println(e.getFileTxt());
+			} catch (NegativeGradeException e) {
+				filesWithNegative.add(file);
+				GradeFileReader.alterGradeInFile("grades/"+file,e.getLine(), e.getIndex(), true);
+				System.err.println("Modded:\n");
+				System.err.println(e.getFileTxt());
+			} catch (FileNotFoundException e) {
+				filesWithNoName.add(file);
+			}
+		}
 		//your code here
-		
 		
 		/*
 		 * TODO 5: Now write all the records to the file named AllGrades.csv.  You can write

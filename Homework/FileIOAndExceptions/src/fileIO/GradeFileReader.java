@@ -66,17 +66,19 @@ public class GradeFileReader {
 			String line = scn.nextLine();
 			file.add(ReadAndGradeMain.splitCSVLineIntoArray(line,new ArrayList<>()));
 		}
-		int lineIndex = 0;
-		int index = 0;
+		int lineIndex = 1;
 		for(ArrayList<String> line:file){
+			int index = 0;
 
 			for(String item:line){
 
 				if(isNumber(item)){
 					if(Integer.parseInt(item)<0){
+						scn.close();
 						throw new NegativeGradeException(index,lineIndex,filename);
 					}
 				}else{
+					scn.close();
 					throw new MissingGradeException(index,lineIndex,filename);
 				}
 				index++;
@@ -85,6 +87,7 @@ public class GradeFileReader {
 			lineIndex++;
 
 		}
+		scn.close();
 	}
 	public static boolean isNumber(String num){
 		try{
@@ -108,6 +111,7 @@ public class GradeFileReader {
 				count++;
 			}
 		}
+		scn.close();
 		try
 		{
 			return sum/count;
