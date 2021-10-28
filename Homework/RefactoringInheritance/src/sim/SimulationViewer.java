@@ -96,12 +96,26 @@ public class SimulationViewer {
 		//////////////////////////////////////////////
 		
 		//TODO Part 3 add buttons to add ChargedParticles, see JButton addParticle for an example
-		
+		JButton addChargedParticle = new JButton("Add Charged particle");
+		addChargedParticle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//passes in the number from the dropdown list
+				simulationComponent.addChargedParticles( (Integer)addNumberSelector.getSelectedItem() );
+			} });
+		buttonPanel.add( addChargedParticle );
 		
 		
 		
 		//TODO Part 4 add buttons to add Persons, see JButton addParticle for an example
-		
+		JButton addPerson = new JButton("Add Person");
+		addPerson.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//passes in the number from the dropdown list
+				simulationComponent.addPeople((Integer)addNumberSelector.getSelectedItem());
+			} });
+		buttonPanel.add( addPerson );
 		
 		
 		
