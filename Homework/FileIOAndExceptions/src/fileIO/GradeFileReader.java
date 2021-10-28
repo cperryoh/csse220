@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import exceptions.MissingGradeException;
@@ -58,9 +59,63 @@ public class GradeFileReader {
 	 * @throws MissingGradeException when the file contains a missing grade
 	 * @throws NegativeGradeException when the file contains a negative grade
 	 */
+	public static void isFileValid(String filename) throws FileNotFoundException,MissingGradeException,NegativeGradeException {
+		Scanner scn = new Scanner(new File(filename));
+		ArrayList<ArrayList<String>> file = new ArrayList<>();
+		int i = 0;
+		while(scn.hasNext()){
+			String line = scn.nextLine();
+			file.add(ReadAndGradeMain.splitCSVLineIntoArray(line,new ArrayList<>()));
+		}
+		int lineIndex = 0;
+		int index = 0;
+		for(ArrayList<String> line:file){
+
+			for(String item:line){
+
+				if(isNumber(item)){
+					if(Integer.parseInt(item)<0){
+						throw new NegativeGradeException(index,lineIndex,filename);
+					}
+				}else{
+					throw new MissingGradeException(index,lineIndex,filename);
+				}
+				index++;
+
+			}
+			lineIndex++;
+
+		}
+	}
+	public static boolean isNumber(String num){
+		try{
+			Integer.parseInt(num);
+			return true;
+		}catch (Exception e){
+			return false;
+		}
+	}
 	public static double readGradeFile(String filename) throws FileNotFoundException, MissingGradeException,
 																			NegativeGradeException {
-		return 0.0;
+		isFileValid(filename);
+		int sum=0;
+		int count=0;
+		Scanner scn = new Scanner(new File(filename));
+		while (scn.hasNext()){
+			String line = scn.nextLine();
+			ArrayList<String> items = ReadAndGradeMain.splitCSVLineIntoArray(line,new ArrayList<>());
+			for(String i: items){
+				sum+=Integer.parseInt(i);
+				count++;
+			}
+		}
+		try
+		{
+			return sum/count;
+		}catch (ArithmeticException e){
+			System.err.println("Divide by 0(Sum: "+sum+" Count: "+count+")");
+			return 0;
+		}
 	}
 	
 	/**

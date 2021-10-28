@@ -1,25 +1,27 @@
-At a particular company, departments are composed of named teams and each team has a yearly budget. Teams have both employees and equipment, each of which have a yearly cost. A team is over budget if the total yearly cost of all employees and equipment is greater than the team's budget. It should be possible to get a list of all teams within a department that are over budget.
 @startuml
-class CompanyMain{
-+handlePrintAllOverBudgetTeams()
+abstract class Emotion{
++abstract cry(): void
++abstract laugh(a: int): void
++smile(): void
++yell(): void
 }
-class Department{
--name:String
-+getName()
-+getOverbudgetTeams()
+class Happy Extends Emotion{
++cry(): void
++laugh(a: int): void
++smile(): void
 }
-class Team{
--name
--budget
-+isOverBudget()
+class Sad extends Happy{
++cry(): void
++smile(): void
++yell(): void
++pout(): void
++complain(): void
 }
-interface Expendeture{
--cost:int
-+getCost():int
+Class Feelings{
+-emo: Emotion
+-haps: ArrayList<Happy>
++Feelings(Sad s)
 }
-class Equipment implements Expendeture{}
-class Employee implements Expendeture{}
-Team-->"*"Expendeture
-Department-->"*"Team
-CompanyMain-->"*"Department
+Feelings->Emotion
+Feelings->"*"Happy
 @enduml
