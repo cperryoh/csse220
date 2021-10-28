@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -66,7 +68,7 @@ public class GradeFileReader {
 
 	/**
 	 * Checks if a string can be changed to an integer
-	 * @param num- The string that will be checked
+	 * @param num The string that will be checked
 	 * @return true or false if the string can be converted
 	 */
 	public static boolean isNumber(String num){
@@ -130,8 +132,8 @@ public class GradeFileReader {
 		isFileValid(filename);
 
 		//loop through lines of file keeping track of col index and row number
-		int sum=0;
-		int count=0;
+		double sum=0;
+		double count=0;
 		Scanner scn = new Scanner(new File(filename));
 		while (scn.hasNext()){
 
@@ -143,22 +145,22 @@ public class GradeFileReader {
 
 			//add number to sum
 			for(String i: items){
-				sum+=Integer.parseInt(i);
+				sum+=Double.parseDouble(i);
 				count++;
 			}
 		}
 		scn.close();
 
 		//calculate average grade from file
+		double avg=sum/count;
 		try
 		{
-			return sum/count;
+			avg = Math.round(avg * 100.0) / 100.0;
+			return avg;
 		}catch (ArithmeticException e){
-			System.err.println("Divide by 0(File: "+filename+" Sum: "+sum+" Count: "+count+")");
-			return 0;
+			throw new EmptyFileExpectation(filename);
 		}
 	}
-	
 	/**
 	 * NOTE: Line numbers start at 1 and index values start at 0!
 	 * 

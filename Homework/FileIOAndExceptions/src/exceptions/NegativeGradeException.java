@@ -44,7 +44,7 @@ public class NegativeGradeException extends Throwable {
 
     }
     public void printPlace(){
-        System.err.println("Negative grade Line: "+line+" Index: "+index+" File: "+file);
+        System.err.println("Negative grade Line: "+line+" Index: "+index+" File: "+file+"\n");
         //System.err.println(getFileTxt());
     }
 }

@@ -1,7 +1,7 @@
 package exceptions;
 
 public class EmptyFileExpectation extends Throwable{
-    EmptyFileExpectation(String fileName){
-        System.out.println("File is empty, "+fileName);
+    public EmptyFileExpectation(String fileName){
+        System.err.println("File is empty, "+fileName);
     }
 }
