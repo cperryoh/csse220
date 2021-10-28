@@ -7,5 +7,15 @@ package exceptions;
   //thrown
 
 public class MissingGradeException extends Throwable {
-	
+    int index;
+    int line;
+    String file;
+    public MissingGradeException(int index, int line,String file){
+        this.file=file;
+        this.index=index;
+        this.line=line;
+    }
+    public void printPlace(){
+        System.err.format("Missing grade Line: "+line+" Index: "+index+" File: "+file);
+    }
 }

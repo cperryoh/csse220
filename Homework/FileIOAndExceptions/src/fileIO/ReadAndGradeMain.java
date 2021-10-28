@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 import exceptions.MissingGradeException;
@@ -13,7 +14,7 @@ import exceptions.NegativeGradeException;
 public class ReadAndGradeMain {
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		
 		/* 
 		 * TODO 1: Read through the file of names with email addresses, and form a list of all
@@ -37,16 +38,25 @@ public class ReadAndGradeMain {
 		 *         jane.smith@rosehulman.edu
 		 *         jane.smith@gmail.com
 		 */
-		
-		Scanner scanner = null;
 		String filename = "AllNames.csv";
+		ArrayList<Person> p = new ArrayList<>();
+		File f = new File(filename);
+		Scanner scanner = new Scanner(f);
 		ArrayList<String> emailWarnings = new ArrayList<String>();
 		//set up scanner to read here and the rest of your code here
-		
+		String header = scanner.nextLine();
+		while(scanner.hasNext()){
+			ArrayList<String> item = splitCSVLineIntoArray(scanner.nextLine(),new ArrayList<>());
+			String properEmail=item.get(1)+"."+item.get(0)+"@rose-hulman.edu";
+			if(!item.get(2).equals(properEmail.toLowerCase())){
+				emailWarnings.add(item.get(2));
+			}else{
+				p.add(new Person(item.get(1),item.get(0),item.get(2)));
+			}
+		}
 		scanner.close();
-		
-		
-		
+
+
 		//TODO 2: Create exception classes (NOTE, when this is finished, it should fix the 
 		//compiler error in the GradeFileReader.java file
 		
@@ -130,5 +140,17 @@ public class ReadAndGradeMain {
 		
 		
 		System.out.println("\n\nDone.");
+	}
+	public static ArrayList<String> splitCSVLineIntoArray(String line,ArrayList<String>csv){
+		if(!line.contains(",")){
+			csv.add(line);
+			return csv;
+		}
+		String item = line.substring(0,line.indexOf(','));
+		if(line.contains(",")){
+			line=line.substring(line.indexOf(',')+1);
+		}
+		csv.add(item);
+		return splitCSVLineIntoArray(line,csv);
 	}
 }

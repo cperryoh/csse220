@@ -1,10 +1,27 @@
 @startuml
-class SolarSystemMain{
+abstract class Emotion{
++abstract cry(): void
++abstract laugh(a: int): void
++smile(): void
++yell(): void
 }
-class SolarSystem{
+class Happy Extends Emotion{
++cry(): void
++laugh(a: int): void
++smile(): void
 }
-class Moon{
+class Sad extends Happy{
++cry(): void
++smile(): void
++yell(): void
++pout(): void
++complain(): void
 }
-class Planet{
+Class Feelings{
+-emo: Emotion
+-haps: ArrayList<Happy>
++Feelings(Sad s)
 }
+Feelings->Emotion
+Feelings->"*"Happy
 @enduml

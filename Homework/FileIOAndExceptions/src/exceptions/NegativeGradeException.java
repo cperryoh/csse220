@@ -7,5 +7,15 @@ package exceptions;
   //thrown
 
 public class NegativeGradeException extends Throwable {
-	
+    int index;
+    int line;
+    String file;
+    public NegativeGradeException(int index, int line,String file){
+        this.file=file;
+        this.index=index;
+        this.line=line;
+    }
+    public void printPlace(){
+        System.err.println("Negative grade Line: "+line+" Index: "+index+" File: "+file);
+    }
 }
