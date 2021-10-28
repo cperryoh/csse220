@@ -38,6 +38,8 @@ public class ReadAndGradeMain {
 		 *         jane.smith@rosehulman.edu
 		 *         jane.smith@gmail.com
 		 */
+
+		//intial set up
 		String filename = "AllNames.csv";
 		HashMap<String,Person> people = new HashMap<>();
 		File f = new File(filename);
@@ -48,18 +50,33 @@ public class ReadAndGradeMain {
 			e.printStackTrace();
 		}
 		ArrayList<String> emailWarnings = new ArrayList<String>();
-		//set up scanner to read here and the rest of your code here
+
+		//pop the scanner out of the queue
 		String header = scanner.nextLine();
+
+
+		//loop through each line
 		while(scanner.hasNext()){
+
+			//get the line as a list of strings
 			ArrayList<String> item = splitCSVLineIntoArray(scanner.nextLine(),new ArrayList<>());
+
+			//determine what a proper email would look like for this student
 			String properEmail=item.get(1)+"."+item.get(0)+"@rose-hulman.edu";
+
+			//if the emails do no match, add them to email warnings
 			if(!item.get(2).equals(properEmail.toLowerCase())){
 				emailWarnings.add(item.get(2));
-			}else{
+			}
+
+			//if they do match compile the data into a person instance and add it to the hashmap
+			else{
 				Person person = new Person(item.get(1),item.get(0),item.get(2));
 				people.put(person.email,person);
 			}
 		}
+
+		//close the scanner
 		scanner.close();
 
 
@@ -92,13 +109,25 @@ public class ReadAndGradeMain {
 			try {
 				GradeFileReader.readGradeFile("grades/"+file);
 			} catch (MissingGradeException e) {
+
+				//add file name to list of files with missing grades
 				filesWithMissing.add(file);
+
+				//fix the file
 				GradeFileReader.alterGradeInFile("grades/"+file,e.getLine(), e.getIndex(), false);
+
+				//print out the modded file
 				System.err.println("Modded:\n");
 				System.err.println(e.getFileTxt());
 			} catch (NegativeGradeException e) {
+
+				//add file name to list of files with negative grades
 				filesWithNegative.add(file);
+
+				//fix the file
 				GradeFileReader.alterGradeInFile("grades/"+file,e.getLine(), e.getIndex(), true);
+
+				//print the modded file
 				System.err.println("Modded:\n");
 				System.err.println(e.getFileTxt());
 			} catch (FileNotFoundException e) {
@@ -134,11 +163,17 @@ public class ReadAndGradeMain {
 		
 		String outputFilename = "AllGrades.csv";
 		System.out.println("Now writing grades to " + outputFilename);
+		File outFile = new File(outputFilename);
 		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(outFile);
+			pw.println("last,first,email,average,letterGrade");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			pw.close();
+		}
 		//your code here
-		
-		
-		pw.close();
 		
 		/*
 		 * TODO 6: Below, print out to the console (using System.out) the following reports:

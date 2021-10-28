@@ -6,78 +6,52 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import exceptions.EmptyFileExpectation;
 import exceptions.MissingGradeException;
 import exceptions.NegativeGradeException;
 
 public class GradeFileReader {
-	
+
 	/**
-	 * TODO 3
-	 * This method should take a file name, open the file and read all the grades contained within.
-	 * The grades, when well-formed, should be one or more lines of comma-separated integers.  It
-	 * is possible that the file is NOT well-formed, but more on that below.  When the file is
-	 * well-formed, you should read EVERY integer on every line and calculate an average.  You
-	 * should return that average.
-	 * 
-	 * Malformed files:
-	 * There are three possibilities for a file to be malformed:
-	 * 		1) The file may be empty
-	 * 		2) The file may contain an empty grade (which would have a comma without a corresponding
-	 * 			integer)
-	 * 		3) The file may contain a negative grade
-	 * 
-	 * If (1), you should simply return 0.0 as the average. 
-	 * If (2), you should throw a new MissingGradeException (and thus not complete the method)
-	 * If (3), you should throw a new NegativeGradeException (and thus not complete the method)
-	 * 
-	 * NOTE: A file can contain a different number of grades on each line and is still considered
-	 * well-formed!
-	 * 
-	 * NOTE: A line should NOT end with a comma but with an integer
-	 * 
-	 * Example of a well-formed file:
-	 * 80,90,70,90
-	 * 99,100
-	 * 
-	 * Examples of malformed files:
-	 * 1,2,,3,4  (missing grade in 3rd position with index 2)
-	 * 
-	 * OR
-	 * 1,2,-3,4  (contains negative grade in 3rd position with index 2)
-	 * 
-	 * OR
-	 * ,80,90    (contains missing grade in beginning of the line)
-	 * 
-	 * OR
-	 * 80,90,    (contains missing grade in end of the line)
-	 * 
-	 * @param filename - the name of the file to read
-	 * @return the average of all values within the file when the file is well-formed
-	 * 
-	 * @throws FileNotFoundException when the filename does not exist
-	 * @throws MissingGradeException when the file contains a missing grade
-	 * @throws NegativeGradeException when the file contains a negative grade
+	 * Checks if a grade file is valid
+	 * @param filename-Name of file to check
+	 * @throws FileNotFoundException
+	 * @throws MissingGradeException
+	 * @throws NegativeGradeException
 	 */
 	public static void isFileValid(String filename) throws FileNotFoundException,MissingGradeException,NegativeGradeException {
 		Scanner scn = new Scanner(new File(filename));
+
+		//list of lines from file
 		ArrayList<ArrayList<String>> file = new ArrayList<>();
 		int i = 0;
+
+		//populate file list from grade file
 		while(scn.hasNext()){
 			String line = scn.nextLine();
 			file.add(ReadAndGradeMain.splitCSVLineIntoArray(line,new ArrayList<>()));
 		}
+
+		//check if the file is valid
 		int lineIndex = 1;
 		for(ArrayList<String> line:file){
 			int index = 0;
 
+			//loop through each item on a line
 			for(String item:line){
-
+				//check if it can be converted to a number
 				if(isNumber(item)){
+
+					//check if grade is negative
 					if(Integer.parseInt(item)<0){
 						scn.close();
 						throw new NegativeGradeException(index,lineIndex,filename);
 					}
-				}else{
+				}
+
+				//if it cant be, assume this is the place of a missing grade
+				else{
 					scn.close();
 					throw new MissingGradeException(index,lineIndex,filename);
 				}
@@ -89,6 +63,12 @@ public class GradeFileReader {
 		}
 		scn.close();
 	}
+
+	/**
+	 * Checks if a string can be changed to an integer
+	 * @param num- The string that will be checked
+	 * @return true or false if the string can be converted
+	 */
 	public static boolean isNumber(String num){
 		try{
 			Integer.parseInt(num);
@@ -97,26 +77,84 @@ public class GradeFileReader {
 			return false;
 		}
 	}
+	/**
+	 * TODO 3
+	 * This method should take a file name, open the file and read all the grades contained within.
+	 * The grades, when well-formed, should be one or more lines of comma-separated integers.  It
+	 * is possible that the file is NOT well-formed, but more on that below.  When the file is
+	 * well-formed, you should read EVERY integer on every line and calculate an average.  You
+	 * should return that average.
+	 *
+	 * Malformed files:
+	 * There are three possibilities for a file to be malformed:
+	 * 		1) The file may be empty
+	 * 		2) The file may contain an empty grade (which would have a comma without a corresponding
+	 * 			integer)
+	 * 		3) The file may contain a negative grade
+	 *
+	 * If (1), you should simply return 0.0 as the average.
+	 * If (2), you should throw a new MissingGradeException (and thus not complete the method)
+	 * If (3), you should throw a new NegativeGradeException (and thus not complete the method)
+	 *
+	 * NOTE: A file can contain a different number of grades on each line and is still considered
+	 * well-formed!
+	 *
+	 * NOTE: A line should NOT end with a comma but with an integer
+	 *
+	 * Example of a well-formed file:
+	 * 80,90,70,90
+	 * 99,100
+	 *
+	 * Examples of malformed files:
+	 * 1,2,,3,4  (missing grade in 3rd position with index 2)
+	 *
+	 * OR
+	 * 1,2,-3,4  (contains negative grade in 3rd position with index 2)
+	 *
+	 * OR
+	 * ,80,90    (contains missing grade in beginning of the line)
+	 *
+	 * OR
+	 * 80,90,    (contains missing grade in end of the line)
+	 *
+	 * @param filename - the name of the file to read
+	 * @return the average of all values within the file when the file is well-formed
+	 *
+	 * @throws FileNotFoundException when the filename does not exist
+	 * @throws MissingGradeException when the file contains a missing grade
+	 * @throws NegativeGradeException when the file contains a negative grade
+	 */
 	public static double readGradeFile(String filename) throws FileNotFoundException, MissingGradeException,
-																			NegativeGradeException {
+																			NegativeGradeException, EmptyFileExpectation {
+		//check if file is valid, if nothing is thrown, continue
 		isFileValid(filename);
+
+		//loop through lines of file keeping track of col index and row number
 		int sum=0;
 		int count=0;
 		Scanner scn = new Scanner(new File(filename));
 		while (scn.hasNext()){
+
+			//get cur line
 			String line = scn.nextLine();
+
+			//parse line into array
 			ArrayList<String> items = ReadAndGradeMain.splitCSVLineIntoArray(line,new ArrayList<>());
+
+			//add number to sum
 			for(String i: items){
 				sum+=Integer.parseInt(i);
 				count++;
 			}
 		}
 		scn.close();
+
+		//calculate average grade from file
 		try
 		{
 			return sum/count;
 		}catch (ArithmeticException e){
-			System.err.println("Divide by 0(Sum: "+sum+" Count: "+count+")");
+			System.err.println("Divide by 0(File: "+filename+" Sum: "+sum+" Count: "+count+")");
 			return 0;
 		}
 	}
