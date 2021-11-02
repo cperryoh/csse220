@@ -76,7 +76,14 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public void add(Integer element) {
-		// TODO 01 Implement the add(Integer element) method.
+		ListNode n = new ListNode(element);
+		if(size()==0){
+			last=n;
+			first=n;
+			return;
+		}
+		last.next=n;
+		last=n;
 	}
 
 	
@@ -87,8 +94,13 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public Integer size() {
-		// TODO 02 Implement the size() method.
-		return -1;
+		ListNode e = first;
+		int count=0;
+		while(e!=null){
+			e=e.next;
+			count++;
+		}
+		return count;
 	}
 	
 	
@@ -111,7 +123,33 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public void insertAtIndex(int index, Integer element) throws IndexOutOfBoundsException {
-		// TODO 03 Implement the insertAtIndex(int index, int value) method.
+		if (size()!=0 && index>size()){
+			throw new IndexOutOfBoundsException();
+		}
+		if(index==0){
+			ListNode n = new ListNode(element);
+			if(last==null){
+				last=n;
+			}
+			n.next=first;
+			first=n;
+			return;
+		}
+		if(index>=size()){
+			add(element);
+			return;
+		}
+		int count = 0;
+		ListNode e = first;
+		while(count<index-1&&e!=null){
+			count++;
+			e=e.next;
+		}
+		if(e!=null){
+			ListNode newEl = new ListNode(element);
+			newEl.next=e.next;
+			e.next=newEl;
+		}
 	}
 	
 	
@@ -122,10 +160,23 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public boolean contains(Integer element) {
-		// TODO 04 Implement the contains(int x) method.
-		return false;
+		return indexOf(element)!=-1;
 	}
-
+	public ListNode get(int index)throws IndexOutOfBoundsException{
+		if(index>=size()){
+			throw new IndexOutOfBoundsException();
+		}
+		int curIndex=0;
+		ListNode e = first;
+		while(e!=null){
+			if(curIndex==index){
+				return e;
+			}
+			curIndex++;
+			e=e.next;
+		}
+		throw new NullPointerException();
+	}
 	
 	/**
 	 *  This method should attempt to remove the FIRST occurrence of the
@@ -136,8 +187,30 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public boolean remove(Integer element) {
-		// TODO 05 Implement the remove(Integer element) method
-		return false;
+		int index= indexOf(element);
+		if(index==-1){
+			return false;
+		}
+		ListNode el = get(index);
+		if(size()==1){
+			last=null;
+			first=null;
+			return true;
+		}
+		if(index==0){
+			first=el.next;
+			return true;
+		}
+		if(index==size()-1){
+			ListNode prev = get(index-1);
+			last=prev;
+			prev.next=null;
+			return true;
+		}
+		ListNode prev=get(index-1);
+		ListNode next = el.next;
+		prev.next=next;
+		return true;
 	}
 	
 	
@@ -148,8 +221,16 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public int indexOf(Integer element) {
-		// TODO 06 Implement the indexOf(int x) method.
-		return Integer.MIN_VALUE;
+		ListNode e = first;
+		int index=0;
+		while(e!=null){
+			if(e.element==element){
+				return index;
+			}
+			e=e.next;
+			index++;
+		}
+		return -1;
 	}
 
 	
@@ -162,7 +243,12 @@ public class SinglyLinkedList implements ILinkedList {
 	 */
 	@Override
 	public Integer set(int index, Integer element) throws IndexOutOfBoundsException {
-		// TODO 07 Implement the set(int index, int element) method.
-		return -1;
+		if(index<0||index>size()-1){
+			throw new IndexOutOfBoundsException();
+		}
+		ListNode e = get(index);
+		int old = e.getElement();
+		e.element=element;
+		return old;
 	}
 }

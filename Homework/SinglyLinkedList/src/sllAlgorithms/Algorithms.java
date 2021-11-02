@@ -2,10 +2,12 @@ package sllAlgorithms;
 
 import sll.ILinkedList;
 import sll.IListNode;
+import sll.ListNode;
 import sll.SinglyLinkedList;
 
 // TODO: complete sll.SinglyLinkedList first, then use it to complete these problems.
 public class Algorithms {
+
 	/**
 	 * 
 	 * Write a function that takes an incoming array of integers and returns a linked
@@ -15,8 +17,14 @@ public class Algorithms {
 	 * So arraylistOf1s({123,456,1, 21}) yields [123, 1]
 	 */
 	public static SinglyLinkedList arraylistOf1s(int[] incomingA) {
-		// TODO: Solve me
-		return null;
+		SinglyLinkedList s = new SinglyLinkedList();
+		for(int i :incomingA){
+			String num = Integer.toString(i);
+			if(num.charAt(0)=='1'){
+				s.add(i);
+			}
+		}
+		return s;
 	} // arraylistOf1s
 
 	/**
@@ -28,7 +36,17 @@ public class Algorithms {
 	 * 
 	 */
 	public static void insertIntoSorted(ILinkedList list, int numberToAdd) {
-		// TODO: Solve me
+		IListNode e =list.getFirst();
+		int index=0;
+		while (e!=null){
+			if(e.getElement()>numberToAdd){
+				list.insertAtIndex(index,numberToAdd);
+				return;
+			}
+			e=e.getNext();
+			index++;
+		}
+		list.add(numberToAdd);
 	} // insertIntoSorted
 
 	/**
@@ -38,7 +56,14 @@ public class Algorithms {
 	 * So removeLongNumbers([1,1000,3,99999,999]) yields [1, 3, 999]
 	 */
 	public static void removeLongNumbers(ILinkedList incomingList) {
-		// TODO: Solve me
+		IListNode e = incomingList.getFirst();
+		while (e!=null){
+			String num = Integer.toString(e.getElement());
+			if(num.length()>3){
+				incomingList.remove(e.getElement());
+			}
+			e=e.getNext();
+		}
 	} // removeLongNumbers
 
 	/**
@@ -49,8 +74,19 @@ public class Algorithms {
 	 * checkSorted ([]) yields true.
 	 */
 	public static boolean checkSorted(ILinkedList incomingList) {
-		// TODO: Solve me
-		return false;
+		IListNode e = incomingList.getFirst();
+		if(incomingList.size()==0){
+			return true;
+		}
+		while (e!=null){
+			if(e.getNext()!=null){
+				if(e.getNext().getElement()<e.getElement()){
+					return false;
+				}
+			}
+			e=e.getNext();
+		}
+		return true;
 	} // checkSorted
 
 	/**
@@ -59,7 +95,13 @@ public class Algorithms {
 	 * So doubleList([1, 2, 3]) yields [1, 1, 2, 2, 3, 3].
 	 */
 	public static void doubleList(ILinkedList incomingList) {
-		// TODO: Solve me
+		IListNode e = incomingList.getFirst();
+		int index = 0;
+		while(e!=null){
+			incomingList.insertAtIndex(index+1,e.getElement());
+			index+=2;
+			e=e.getNext().getNext();
+		}
 	} // doubleList
 
 	/**
@@ -72,8 +114,23 @@ public class Algorithms {
 	 * + 0. [1,4,5,9,14] is a fibonacci sequence.
 	 */
 	public static boolean isFibonacciSequence(ILinkedList incomingList) {
-		// TODO: Solve me
-		return false;
+		if(incomingList.size()<3){
+			return false;
+		}
+		Integer prev1=null;
+		Integer prev2=null;
+		IListNode e = incomingList.getFirst();
+		while (e!=null){
+			if(prev1!=null&&prev2!=null){
+				if(e.getElement()!=prev1+prev2){
+					return false;
+				}
+			}
+			prev2=prev1;
+			prev1=e.getElement();
+			e=e.getNext();
+		}
+		return true;
 	} // isFibonacciSequence
 
 	/**
@@ -85,10 +142,16 @@ public class Algorithms {
 	 * 
 	 */
 	public static Integer recursiveGet(int index, IListNode iListNode) {
-		// TODO: Use RECURSION to solve this problem.
-		// You may utilize a helper operation
-		return -1;
-
+		if(index<0)
+			throw new IndexOutOfBoundsException();
+		if(index==0){
+			try{
+				return iListNode.getElement();
+			}catch (NullPointerException e){
+				throw new IndexOutOfBoundsException();
+			}
+		}
+		return recursiveGet(index-1,iListNode.getNext());
 	} // recursiveGet
 
 }
