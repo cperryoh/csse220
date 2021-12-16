@@ -11,6 +11,8 @@ public class ListNode implements IListNode{
 	public Integer element;
 	public ListNode next;
 
+
+
 	/**
 	 * Constructs a node with the given element and the next node to point to.
 	 * 

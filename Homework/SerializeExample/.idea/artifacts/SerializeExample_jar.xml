@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SerializeExample:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SerializeExample_jar</output-path>
+    <root id="archive" name="SerializeExample.jar">
+      <element id="module-output" name="SerializeExample" />
+    </root>
+  </artifact>
+</component>
